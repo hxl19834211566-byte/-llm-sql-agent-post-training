@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-VENV_DIR="${VENV_DIR:-/root/venv-route-a}"
+VENV_DIR="${VENV_DIR:-/root/venv-sql-agent}"
 PROJECT_DIR="${PROJECT_DIR:-/root/project}"
 
 apt-get update

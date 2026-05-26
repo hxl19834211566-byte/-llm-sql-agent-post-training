@@ -13,7 +13,6 @@ models/
 
 # Large model/checkpoint artifacts
 checkpoints/*
-!checkpoints/README.md
 **/adapter_model.safetensors
 **/pytorch_model*.bin
 **/model*.safetensors
@@ -28,16 +27,12 @@ checkpoints/*
 
 # Large/raw database and generated dataset assets
 data/**
-!data/
-!data/README.md
 *.sqlite
 *.db
 
 # Generated prediction/evaluation artifacts.
 # Keep selected small summaries under results/.
 logs/**
-!logs/
-!logs/README.md
 results/tmp/
 
 # Temporary transfer/archive files
@@ -52,16 +47,11 @@ tmp/
 *_notes/
 docs/*.pdf
 
-# Local planning notes and archived experiment records.
-after_route_a_addons.md
-dataset_acceptance_checklist.md
-dataset_research_hf.md
-data_quota_table.md
-day*_*.md
-job_project_*.md
-project_plan_v2_dataset_assessment.md
-tomorrow_start_runbook.md
-流程.txt
+# Local notes and archived experiment records.
+/*.md
+!README.md
+/*.txt
+!requirements.txt
 
 # Public docs whitelist
 docs/*

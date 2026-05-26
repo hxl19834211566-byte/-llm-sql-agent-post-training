@@ -821,7 +821,7 @@ def main() -> None:
     if looks_like_eval_path(args.train_file) and not args.allow_eval_train:
         raise ValueError(
             "Refusing to train on an eval-looking file. "
-            "Use a train/grpo file, or pass --allow-eval-train only for an intentional debug run."
+            "Use a train/grpo file, or pass --allow-eval-train only for an explicit controlled run."
         )
     output_dir.mkdir(parents=True, exist_ok=True)
 
@@ -963,7 +963,7 @@ def main() -> None:
         "global_steps": global_step,
         "update_steps": update_step,
         "train_metrics": mean_numeric(history),
-        "baseline_current_mainline_selected": "428/500",
+        "baseline_current_selected": "428/500",
         "baseline_current_value_linking_oracle": "451/500",
         "success_condition": "eval500 oracle > 451 and reranked selected > 428",
     }

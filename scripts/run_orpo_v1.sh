@@ -116,6 +116,6 @@ print(json.dumps({
     "orpo_eval_execution_accuracy": eval_summary.get("execution_accuracy"),
     "baseline_sft_v3_schema_v2_prompt_only": "361/500",
     "baseline_dpo_v3": "353/500",
-    "best_mainline_with_rerank": "404/500",
+    "best_rerank_baseline": "404/500",
 }, ensure_ascii=False, indent=2))
 PY
