@@ -66,15 +66,9 @@ tomorrow_start_runbook.md
 # Public docs whitelist
 docs/*
 !docs/
-!docs/README.md
-!docs/mainline_report.md
-!docs/final_pipeline_runbook.md
-!docs/rerank_repair_report.md
-!docs/schema_v2_logic_review.md
-!docs/tool_calling_demo_report.md
-!docs/value_linking_v1_report.md
-!docs/value_linking_v1_runbook.md
-!docs/side_routes.md
+!docs/reproduce.md
+!docs/experiments.md
+!docs/demo.md
 
 # Public scripts whitelist
 scripts/*

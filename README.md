@@ -176,12 +176,9 @@ final_answer
 
 ## 文档入口
 
-- [docs/mainline_report.md](docs/mainline_report.md)：最终主线结果和采用理由。
-- [docs/final_pipeline_runbook.md](docs/final_pipeline_runbook.md)：完整复现流程。
-- [docs/side_routes.md](docs/side_routes.md)：DPO / OPD / ORPO / GRPO 副线实验。
-- [docs/value_linking_v1_report.md](docs/value_linking_v1_report.md)：值链接 v1 的方法和收益。
-- [docs/rerank_repair_report.md](docs/rerank_repair_report.md)：重排序 / 修复 v15 的改进。
-- [docs/tool_calling_demo_report.md](docs/tool_calling_demo_report.md)：工具调用式 SQL 智能体 demo。
+- [docs/reproduce.md](docs/reproduce.md)：复现最终 90.0% 结果。
+- [docs/experiments.md](docs/experiments.md)：主线和 DPO / OPD / ORPO / GRPO 副线实验。
+- [docs/demo.md](docs/demo.md)：工具调用式 SQL 智能体 demo。
 
 ## 许可证
 
