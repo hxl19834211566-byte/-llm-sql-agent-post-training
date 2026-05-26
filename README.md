@@ -1,8 +1,8 @@
-# Text-to-SQL Agent: SFT + Value Linking + Rerank
+# Text-to-SQL Agent：SFT + Value Linking + Rerank
 
-BI / Text-to-SQL pipeline with executable SQL evaluation. The system uses a Qwen3-4B-Base LoRA SFT checkpoint, schema-aware prompting, value-linking hints, multi-candidate generation, and a deterministic rerank/repair stage.
+这是一个面向 BI / Text-to-SQL 场景的 LLM SQL Agent 项目，核心评估指标是 SQLite 执行准确率。最终系统使用 Qwen3-4B-Base 的 LoRA SFT checkpoint，结合 schema-aware prompt、value-linking hints、多候选生成，以及确定性的 rerank / repair 阶段。
 
-Main result:
+最终主线结果：
 
 ```text
 SFT v3 + schema v2 + value-linking v1 + n20 candidates + rerank v15
@@ -10,54 +10,60 @@ SFT v3 + schema v2 + value-linking v1 + n20 candidates + rerank v15
 = 90.0% SQLite execution accuracy
 ```
 
-The candidate oracle upper bound is `451 / 500 = 90.2%`. That number is used only for analysis; the selected result is `90.0%`.
-
-## Contents
-
-- Core SFT, inference, and evaluation scripts.
-- Optional DPO / OPD / ORPO / GRPO side-route scripts.
-- SQL execution evaluation on Spider-style SQLite databases.
-- Schema v2 and value-linking prompt builders.
-- Multi-candidate SQL generation.
-- Deterministic SQL candidate rerank/repair.
-- CLI demo for a tool-calling SQL agent flow.
-- Final reports and result summaries.
-
-Large local artifacts are not tracked:
-
-- Base models and Hugging Face caches.
-- LoRA adapter weights.
-- Spider SQLite database files.
-- Generated JSONL predictions, candidate dumps, and raw train/eval data.
-- Local notes and generated artifacts.
-
-## Repository Layout
+对应候选集 oracle upper bound 为：
 
 ```text
-demo/        Tool-calling SQL agent demo
-docs/        Mainline reports and runbooks
-eval/        SQLite execution evaluator
-results/     Result summaries
-scripts/     Core data prep, training, generation, value-linking, rerank
-data/        Local-only data workspace, documented but mostly ignored
-checkpoints/ Local-only adapter workspace, documented but weights ignored
+451 / 500 = 90.2%
 ```
 
-## Final Pipeline
+`90.0%` 是最终可报告的 selected accuracy；`90.2%` 只表示当前 n20 候选集的理论上限。
+
+## 内容
+
+- 核心 SFT、推理和执行评估脚本。
+- DPO / OPD / ORPO / GRPO 可选副线实验脚本。
+- Spider 风格 SQLite 数据库上的 SQL execution evaluation。
+- schema v2 prompt 构建与 value-linking prompt augmentation。
+- 多候选 SQL 生成。
+- SQL candidate rerank / repair。
+- 工具调用式 SQL Agent CLI demo。
+- 最终报告和结果摘要。
+
+以下本地资产不会提交到 Git：
+
+- Hugging Face base model cache。
+- LoRA adapter 权重。
+- Spider SQLite database。
+- 生成的 JSONL 数据、候选 SQL、prediction dump 和原始训练/评估数据。
+- 本地笔记和临时产物。
+
+## 目录结构
+
+```text
+demo/        工具调用式 SQL Agent demo
+docs/        主线报告、副线说明和复现 runbook
+eval/        SQLite execution evaluator
+results/     结果摘要
+scripts/     数据处理、训练、生成、value-linking、rerank 脚本
+data/        本地数据工作区，大部分内容被 gitignore
+checkpoints/ 本地 checkpoint 工作区，权重被 gitignore
+```
+
+## 最终 Pipeline
 
 ```text
 Qwen3-4B-Base
 -> SFT v3 LoRA
 -> schema v2 prompt
 -> value-linking v1 prompt hints
--> 20 SQL candidates per question
+-> 每题生成 20 个 SQL candidates
 -> rerank / repair v15
 -> SQLite execution evaluation
 ```
 
-SFT v3 fixed most output-format failures. Later errors were mostly schema linking, value grounding, joins, aliases, and aggregation semantics, so the final gains came from candidate generation and reranking rather than another training pass.
+SFT v3 主要解决输出边界问题，让模型稳定输出一条只读 SQL。后续主要错误集中在 schema linking、value grounding、JOIN、别名、聚合和返回列语义上，因此最终提升主要来自候选生成和 rerank，而不是继续盲目训练。
 
-## Key Results
+## 核心结果
 
 | System | Execution accuracy |
 | --- | ---: |
@@ -68,11 +74,23 @@ SFT v3 fixed most output-format failures. Later errors were mostly schema linkin
 | SFT v3 + schema v2 + value-linking n20 + rerank v14 | 428/500 = 85.6% |
 | SFT v3 + schema v2 + value-linking n20 + rerank v15 | 450/500 = 90.0% |
 
-See [results/leaderboard.md](results/leaderboard.md) and [results/final_mainline_summary.json](results/final_mainline_summary.json).
+完整结果见：
 
-## Setup
+- [results/leaderboard.md](results/leaderboard.md)
+- [results/final_mainline_summary.json](results/final_mainline_summary.json)
 
-Environment used for the recorded runs: Ubuntu 22.04, Python 3.10, CUDA 12.8, A800 80GB.
+## 环境
+
+记录实验使用的环境：
+
+```text
+Ubuntu 22.04
+Python 3.10
+CUDA 12.8
+A800 80GB
+```
+
+安装依赖：
 
 ```bash
 python -m venv .venv
@@ -80,7 +98,7 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-Place external assets locally:
+需要本地放置的外部资产：
 
 ```text
 hf_cache/models/Qwen3-4B-Base
@@ -89,11 +107,11 @@ data/raw/spider/tables.json
 data/raw/spider/database/<db_id>/<db_id>.sqlite
 ```
 
-These files are not committed because they are large or externally licensed.
+这些文件体积较大或受上游许可证约束，因此不随仓库发布。
 
-## Reproduce The Final Rerank
+## 复现最终 Rerank
 
-If you have the saved candidate JSONL locally:
+如果本地已有保存好的 n20 candidates：
 
 ```bash
 python scripts/rerank_sql_candidates.py \
@@ -107,7 +125,7 @@ python scripts/rerank_sql_candidates.py \
   --score-version v15
 ```
 
-Expected core summary:
+预期核心结果：
 
 ```json
 {
@@ -121,11 +139,11 @@ Expected core summary:
 }
 ```
 
-Do not pass `--enable-join-graph` for this result.
+最终报告结果不要添加 `--enable-join-graph`。
 
-## Run The Demo
+## 运行 Demo
 
-List examples from a local candidate file:
+列出本地 candidate 文件中的样例：
 
 ```bash
 python demo/sql_agent_demo.py \
@@ -135,7 +153,7 @@ python demo/sql_agent_demo.py \
   --limit 5
 ```
 
-Run one offline tool-calling trace:
+运行一个离线工具调用 trace：
 
 ```bash
 python demo/sql_agent_demo.py \
@@ -146,17 +164,25 @@ python demo/sql_agent_demo.py \
   --trace-output logs/sql_agent_demo_trace.json
 ```
 
-The demo prints `search_schema`, selected model SQL, `validate_sql`, `run_sql`, and a grounded final answer.
+demo 会输出：
 
-## Recommended Reading
+```text
+search_schema
+model_sql
+validate_sql
+run_sql
+final_answer
+```
 
-- [docs/mainline_report.md](docs/mainline_report.md)
-- [docs/final_pipeline_runbook.md](docs/final_pipeline_runbook.md)
-- [docs/side_routes.md](docs/side_routes.md)
-- [docs/value_linking_v1_report.md](docs/value_linking_v1_report.md)
-- [docs/rerank_repair_report.md](docs/rerank_repair_report.md)
-- [docs/tool_calling_demo_report.md](docs/tool_calling_demo_report.md)
+## 文档入口
+
+- [docs/mainline_report.md](docs/mainline_report.md)：最终主线结果和采用理由。
+- [docs/final_pipeline_runbook.md](docs/final_pipeline_runbook.md)：完整复现流程。
+- [docs/side_routes.md](docs/side_routes.md)：DPO / OPD / ORPO / GRPO 副线实验。
+- [docs/value_linking_v1_report.md](docs/value_linking_v1_report.md)：value-linking v1 的方法和收益。
+- [docs/rerank_repair_report.md](docs/rerank_repair_report.md)：rerank / repair v15 的改进。
+- [docs/tool_calling_demo_report.md](docs/tool_calling_demo_report.md)：工具调用式 SQL Agent demo。
 
 ## License
 
-Before publishing, choose a license for the code. Model weights, datasets, and benchmark assets keep their upstream licenses and are not redistributed here.
+发布前需要为代码选择许可证。模型权重、数据集和 benchmark assets 遵循各自上游许可证，本仓库不重新分发这些资产。
