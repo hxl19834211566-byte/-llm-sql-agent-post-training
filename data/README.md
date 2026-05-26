@@ -1,10 +1,10 @@
-# Data Workspace
+# 数据工作区
 
-This directory is a local workspace for benchmark data, generated train/eval JSONL files, and derived schema indexes.
+这个目录用于本地存放 benchmark 数据、生成的训练 / 评估 JSONL 文件，以及派生的 schema index。
 
-Raw benchmark databases, generated training data, prediction dumps, and large derived JSONL artifacts are not redistributed. Recreate or place them locally as needed.
+仓库不重新分发原始 benchmark 数据库、生成的训练数据、预测结果或大型 JSONL 产物。需要复现时，请在本地重新生成或手动放置这些文件。
 
-Expected local layout for full reproduction:
+完整复现时的本地目录结构：
 
 ```text
 data/raw/spider/tables.json
@@ -15,7 +15,7 @@ data/eval/day2_spider_schema_v2_value_linking_eval_500.jsonl
 data/processed/spider_schema_v2.json
 ```
 
-Useful builders:
+常用构建命令：
 
 ```bash
 python scripts/build_spider_schema_v2.py \

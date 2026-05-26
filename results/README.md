@@ -1,16 +1,16 @@
-# Results
+# 结果摘要
 
-Result summaries live here. Large generated artifacts such as candidate JSONL files, prediction dumps, execution analysis files, and raw logs are kept under `logs/` locally and are not tracked.
+这里存放适合提交到 GitHub 的结果摘要。大型生成产物，例如候选 SQL JSONL、预测结果、执行分析文件和原始日志，会保留在本地 `logs/` 目录中，不进入 Git 跟踪范围。
 
-Main result:
+主结果：
 
 ```text
 SFT v3 + schema v2 + value-linking v1 + n20 candidates + rerank v15
 = 450/500
-= 90.0% SQLite execution accuracy
+= 90.0% SQLite 执行准确率
 ```
 
-Files:
+文件：
 
 - [leaderboard.md](leaderboard.md)
 - [final_mainline_summary.json](final_mainline_summary.json)
