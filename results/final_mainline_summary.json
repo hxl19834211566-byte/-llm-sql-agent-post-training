@@ -1,0 +1,21 @@
+{
+  "pipeline": "SFT v3 + schema v2 + value-linking v1 + n20 candidates + rerank v15",
+  "base_model": "Qwen3-4B-Base",
+  "adapter": "checkpoints/sft/sql_sft_v3_qwen3_4b",
+  "eval_set": "eval500",
+  "metric": "SQLite execution accuracy",
+  "total": 500,
+  "greedy_exec_match": 367,
+  "greedy_execution_accuracy": 0.734,
+  "selected_exec_success": 496,
+  "selected_exec_match": 450,
+  "selected_execution_accuracy": 0.9,
+  "oracle_exec_success": 496,
+  "oracle_exec_match": 451,
+  "oracle_execution_accuracy": 0.902,
+  "selected_minus_greedy": 83,
+  "oracle_minus_greedy": 84,
+  "enable_join_graph": false,
+  "score_version": "v15",
+  "source_summary": "logs/rerank_sft_v3_schema_v2_value_linking_summary_eval500_n20_v15.json"
+}

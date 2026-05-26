@@ -1,0 +1,109 @@
+# Python / local runtime
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+
+# Local model caches and downloaded base models
+hf_cache/
+models/
+
+# Large model/checkpoint artifacts
+checkpoints/*
+!checkpoints/README.md
+**/adapter_model.safetensors
+**/pytorch_model*.bin
+**/model*.safetensors
+**/optimizer.pt
+**/scheduler.pt
+**/rng_state.pth
+**/training_args.bin
+**/tokenizer.json
+**/vocab.json
+**/merges.txt
+**/events.out.tfevents.*
+
+# Large/raw database and generated dataset assets
+data/**
+!data/
+!data/README.md
+*.sqlite
+*.db
+
+# Generated prediction/evaluation artifacts.
+# Keep selected small summaries under results/.
+logs/**
+!logs/
+!logs/README.md
+results/tmp/
+
+# Temporary transfer/archive files
+*.tgz
+*.tar
+*.zip
+.tmp_paramiko/
+
+# Local reports and render outputs
+output/
+tmp/
+*_notes/
+docs/*.pdf
+
+# Local planning notes and archived experiment records.
+after_route_a_addons.md
+dataset_acceptance_checklist.md
+dataset_research_hf.md
+data_quota_table.md
+day*_*.md
+job_project_*.md
+project_plan_v2_dataset_assessment.md
+tomorrow_start_runbook.md
+流程.txt
+
+# Public docs whitelist
+docs/*
+!docs/
+!docs/README.md
+!docs/mainline_report.md
+!docs/final_pipeline_runbook.md
+!docs/rerank_repair_report.md
+!docs/schema_v2_logic_review.md
+!docs/tool_calling_demo_report.md
+!docs/value_linking_v1_report.md
+!docs/value_linking_v1_runbook.md
+!docs/side_routes.md
+
+# Public scripts whitelist
+scripts/*
+!scripts/
+!scripts/build_spider_schema_v2.py
+!scripts/rerank_sql_candidates.py
+!scripts/run_sql_candidate_predictions.py
+!scripts/run_sql_completion_predictions.py
+!scripts/setup_env.sh
+!scripts/train_sql_sft_completion.py
+!scripts/upgrade_jsonl_schema_v2.py
+!scripts/upgrade_jsonl_value_linking.py
+!scripts/validate_schema_v2.py
+!scripts/prepare_sql_dpo_v1.py
+!scripts/prepare_sql_dpo_v2_from_v1.py
+!scripts/prepare_sql_dpo_v3_from_v1.py
+!scripts/validate_sql_dpo_v1.py
+!scripts/train_sql_dpo.py
+!scripts/prepare_opd_teacher_prompts.py
+!scripts/build_opd_distill_data.py
+!scripts/train_sql_opd_completion.py
+!scripts/run_opd_v1.sh
+!scripts/train_sql_orpo.py
+!scripts/run_orpo_v1.sh
+!scripts/train_sql_grpo.py
+!scripts/run_grpo_v1.sh
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
