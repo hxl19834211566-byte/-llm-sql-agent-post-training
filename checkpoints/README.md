@@ -2,7 +2,7 @@
 
 这个目录用于本地存放 LoRA adapters 和训练元数据。Adapter 权重和完整 base model 不进入 Git 跟踪范围。
 
-最终主线：
+当前使用：
 
 ```text
 基础模型：Qwen3-4B-Base

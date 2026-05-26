@@ -335,7 +335,7 @@ def main() -> None:
 
     root = Path(args.project_root)
     schema_index_path = Path(args.schema_index) if args.schema_index else root / "data/processed/spider_schema.json"
-    eval_file = Path(args.eval_file) if args.eval_file else root / "data/eval/day2_spider_schema_eval_500.jsonl"
+    eval_file = Path(args.eval_file) if args.eval_file else root / "data/eval/spider_schema_eval_500.jsonl"
     output = Path(args.output) if args.output else root / "data/dpo/sql_dpo_v1_1000.jsonl"
     summary_output = (
         Path(args.summary_output) if args.summary_output else root / "logs/sql_dpo_v1_1000_summary.json"

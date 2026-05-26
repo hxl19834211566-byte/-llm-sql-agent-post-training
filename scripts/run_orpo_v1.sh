@@ -18,7 +18,7 @@ source /usr/local/miniconda3/etc/profile.d/conda.sh
 conda activate py310
 
 SCHEMA_V2_INDEX="$PROJECT_ROOT/data/processed/spider_schema_v2.json"
-EVAL_V2="$PROJECT_ROOT/data/eval/day2_spider_schema_v2_eval_${EVAL_COUNT}.jsonl"
+EVAL_V2="$PROJECT_ROOT/data/eval/spider_schema_v2_eval_${EVAL_COUNT}.jsonl"
 ORPO_EVAL_PRED="$PROJECT_ROOT/logs/orpo_v1_schema_v2_eval${EVAL_COUNT}_predictions.jsonl"
 ORPO_EVAL_OUTPUT="$PROJECT_ROOT/logs/orpo_v1_schema_v2_eval${EVAL_COUNT}_exec_eval.jsonl"
 ORPO_EVAL_SUMMARY="$PROJECT_ROOT/logs/orpo_v1_schema_v2_eval${EVAL_COUNT}_exec_summary.json"
@@ -32,10 +32,10 @@ fi
 
 if [[ ! -f "$EVAL_V2" ]]; then
   python scripts/upgrade_jsonl_schema_v2.py \
-    --input "$PROJECT_ROOT/data/eval/day2_spider_schema_eval_${EVAL_COUNT}.jsonl" \
+    --input "$PROJECT_ROOT/data/eval/spider_schema_eval_${EVAL_COUNT}.jsonl" \
     --schema-index "$SCHEMA_V2_INDEX" \
     --output "$EVAL_V2" \
-    --summary-output "$PROJECT_ROOT/logs/day2_spider_schema_v2_eval_${EVAL_COUNT}_summary.json" \
+    --summary-output "$PROJECT_ROOT/logs/spider_schema_v2_eval_${EVAL_COUNT}_summary.json" \
     --format-version "eval_schema_v2_prompt_only"
 fi
 

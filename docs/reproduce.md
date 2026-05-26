@@ -1,8 +1,8 @@
 # 复现说明
 
-这个文档只保留最终主线的复现路径。完整实验数据、模型权重、候选 SQL 文件和 SQLite 数据库需要在本地准备，不随仓库提交。
+这里记录当前 90.0% 结果的复现路径。模型权重、候选 SQL 文件和 SQLite 数据库需要在本地准备，不随仓库提交。
 
-## 最终结果
+## 结果
 
 ```text
 SFT v3 + schema v2 + value-linking v1 + n20 candidates + rerank v15
@@ -10,7 +10,7 @@ SFT v3 + schema v2 + value-linking v1 + n20 candidates + rerank v15
 = 90.0% SQLite 执行准确率
 ```
 
-候选集 oracle 上限：
+同一批候选中最多可命中：
 
 ```text
 451/500 = 90.2%
@@ -40,16 +40,16 @@ python scripts/build_spider_schema_v2.py \
 
 ```bash
 python scripts/upgrade_jsonl_schema_v2.py \
-  --input data/eval/day2_spider_schema_eval_500.jsonl \
+  --input data/eval/spider_schema_eval_500.jsonl \
   --schema-index data/processed/spider_schema_v2.json \
-  --output data/eval/day2_spider_schema_v2_eval_500.jsonl \
-  --summary-output logs/day2_spider_schema_v2_eval_500_summary.json
+  --output data/eval/spider_schema_v2_eval_500.jsonl \
+  --summary-output logs/spider_schema_v2_eval_500_summary.json
 
 python scripts/upgrade_jsonl_value_linking.py \
-  --input data/eval/day2_spider_schema_v2_eval_500.jsonl \
+  --input data/eval/spider_schema_v2_eval_500.jsonl \
   --sqlite-root data/raw/spider/database \
-  --output data/eval/day2_spider_schema_v2_value_linking_eval_500.jsonl \
-  --summary-output logs/day2_spider_schema_v2_value_linking_eval_500_summary.json
+  --output data/eval/spider_schema_v2_value_linking_eval_500.jsonl \
+  --summary-output logs/spider_schema_v2_value_linking_eval_500_summary.json
 ```
 
 ## 生成 n20 candidates
@@ -60,7 +60,7 @@ python scripts/upgrade_jsonl_value_linking.py \
 python scripts/run_sql_candidate_predictions.py \
   --model-path hf_cache/models/Qwen3-4B-Base \
   --adapter-path checkpoints/sft/sql_sft_v3_qwen3_4b \
-  --eval-file data/eval/day2_spider_schema_v2_value_linking_eval_500.jsonl \
+  --eval-file data/eval/spider_schema_v2_value_linking_eval_500.jsonl \
   --output-file logs/rerank_sft_v3_schema_v2_value_linking_candidates_eval500_n20.jsonl \
   --max-new-tokens 128 \
   --num-candidates 20 \
@@ -68,7 +68,7 @@ python scripts/run_sql_candidate_predictions.py \
   --top-p 0.9
 ```
 
-## 运行最终 rerank
+## 运行 rerank
 
 ```bash
 python scripts/rerank_sql_candidates.py \
@@ -82,9 +82,9 @@ python scripts/rerank_sql_candidates.py \
   --score-version v15
 ```
 
-注意：最终报告结果不要添加 `--enable-join-graph`。
+注意：这组结果使用默认配置，不加 `--enable-join-graph`。
 
-预期核心 summary：
+预期 summary：
 
 ```json
 {

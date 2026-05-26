@@ -17,7 +17,7 @@ conda activate py310
 
 SCHEMA_V2_INDEX="$PROJECT_ROOT/data/processed/spider_schema_v2.json"
 SFT_V4_SCHEMA_V2="$PROJECT_ROOT/data/sft/sql_sft_v4_schema_v2_5000.jsonl"
-EVAL_V2="$PROJECT_ROOT/data/eval/day2_spider_schema_v2_eval_${EVAL_COUNT}.jsonl"
+EVAL_V2="$PROJECT_ROOT/data/eval/spider_schema_v2_eval_${EVAL_COUNT}.jsonl"
 
 if [[ ! -f "$SCHEMA_V2_INDEX" ]]; then
   python scripts/build_spider_schema_v2.py \
@@ -28,10 +28,10 @@ fi
 
 if [[ ! -f "$EVAL_V2" ]]; then
   python scripts/upgrade_jsonl_schema_v2.py \
-    --input "$PROJECT_ROOT/data/eval/day2_spider_schema_eval_${EVAL_COUNT}.jsonl" \
+    --input "$PROJECT_ROOT/data/eval/spider_schema_eval_${EVAL_COUNT}.jsonl" \
     --schema-index "$SCHEMA_V2_INDEX" \
     --output "$EVAL_V2" \
-    --summary-output "$PROJECT_ROOT/logs/day2_spider_schema_v2_eval_${EVAL_COUNT}_summary.json" \
+    --summary-output "$PROJECT_ROOT/logs/spider_schema_v2_eval_${EVAL_COUNT}_summary.json" \
     --format-version "eval_schema_v2_prompt_only"
 fi
 

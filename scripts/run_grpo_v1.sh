@@ -116,15 +116,15 @@ if [[ "$PROBE_ONLY" == "1" ]]; then
   exit 0
 fi
 
-EVAL_SCHEMA_V2="$PROJECT_ROOT/data/eval/day2_spider_schema_v2_eval_${EVAL_COUNT}.jsonl"
-EVAL_VALUE_LINKING="$PROJECT_ROOT/data/eval/day2_spider_schema_v2_value_linking_eval_${EVAL_COUNT}.jsonl"
+EVAL_SCHEMA_V2="$PROJECT_ROOT/data/eval/spider_schema_v2_eval_${EVAL_COUNT}.jsonl"
+EVAL_VALUE_LINKING="$PROJECT_ROOT/data/eval/spider_schema_v2_value_linking_eval_${EVAL_COUNT}.jsonl"
 
 if [[ "$FORCE_PREPARE" == "1" || ! -f "$EVAL_SCHEMA_V2" ]]; then
   python scripts/upgrade_jsonl_schema_v2.py \
-    --input "$PROJECT_ROOT/data/eval/day2_spider_schema_eval_${EVAL_COUNT}.jsonl" \
+    --input "$PROJECT_ROOT/data/eval/spider_schema_eval_${EVAL_COUNT}.jsonl" \
     --schema-index "$SCHEMA_V2_INDEX" \
     --output "$EVAL_SCHEMA_V2" \
-    --summary-output "$PROJECT_ROOT/logs/day2_spider_schema_v2_eval_${EVAL_COUNT}_summary.json" \
+    --summary-output "$PROJECT_ROOT/logs/spider_schema_v2_eval_${EVAL_COUNT}_summary.json" \
     --format-version "eval_schema_v2_prompt_only"
 fi
 
@@ -133,7 +133,7 @@ if [[ "$FORCE_PREPARE" == "1" || ! -f "$EVAL_VALUE_LINKING" ]]; then
     --input "$EVAL_SCHEMA_V2" \
     --sqlite-root "$SQLITE_ROOT" \
     --output "$EVAL_VALUE_LINKING" \
-    --summary-output "$PROJECT_ROOT/logs/day2_spider_schema_v2_value_linking_eval_${EVAL_COUNT}_summary.json" \
+    --summary-output "$PROJECT_ROOT/logs/spider_schema_v2_value_linking_eval_${EVAL_COUNT}_summary.json" \
     --format-version "eval_schema_v2_value_linking_prompt_v1" \
     --max-mentions 24 \
     --max-hints 8 \
